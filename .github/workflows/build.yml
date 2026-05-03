@@ -48,7 +48,6 @@ jobs:
       - name: Build APK
         working-directory: test_app
         run: |
-          buildozer android clean
           buildozer android debug
 
       - name: Upload APK
