@@ -11,6 +11,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Install Buildozer
+        run: |
+            pip install --upgrade pip
+            pip install buildozer cython
+
       - name: Install system dependencies
         run: |
           sudo apt update
