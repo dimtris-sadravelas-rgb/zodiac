@@ -32,7 +32,7 @@ jobs:
       - name: Accept licenses & install SDK
         run: |
           yes | sdkmanager --licenses
-          sdkmanager "platform-tools" "platforms;android-31" "build-tools;30.0.3"
+          sdkmanager "platform-tools" "platforms;android-31" "build-tools;37.0.0"
 
       - name: Install Buildozer
         run: |
