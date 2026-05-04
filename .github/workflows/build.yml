@@ -19,7 +19,8 @@ jobs:
       - name: Install system dependencies
         run: |
           sudo apt update
-          sudo apt install -y python3-pip git zip unzip openjdk-17-jdk autoconf automake libtool pkg-config m4
+          sudo apt install -y python3-pip git zip unzip openjdk-17-jdk \
+       autoconf automake libtool pkg-config m4 gettext
 
       - name: Install Android SDK cmdline tools
         run: |
