@@ -1,8 +1,8 @@
 [app]
 
-title = Zodiac App
-package.name = zodiac
-package.domain = org.test
+title = Zodiac Birth Finder
+package.name = zodiacbirthfinder
+package.domain = org.sadravelas
 
 source.dir = .
 source.include_exts = py,png,jpg
