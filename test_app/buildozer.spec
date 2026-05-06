@@ -8,8 +8,6 @@ version = 0.2
 source.dir = .
 source.include_exts = py,png,jpg
 
-version = 0.1
-
 requirements = python3,kivy
 
 orientation = portrait
