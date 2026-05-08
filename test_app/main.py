@@ -17,10 +17,11 @@ from kivy.uix.spinner import Spinner
 from kivy.uix.checkbox import CheckBox
 from kivy.uix.image import Image
 from datetime import date
+from kivy.clock import Clock
 import webbrowser
 
 
-Window.softinput_mode = "pan"
+Window.softinput_mode = "resize"
 
 store = JsonStore("user_data.json")
 
@@ -315,19 +316,22 @@ class ProfileScreen(Screen):
         root = BoxLayout(orientation="vertical")
         self.add_widget(root)
 
-        scroll = ScrollView(size_hint=(1, 1))
-        self.content = BoxLayout(orientation="vertical", padding=20, spacing=14, size_hint_y=None)
-        self.content.bind(minimum_height=self.content.setter("height"))
-        scroll.add_widget(self.content)
-        root.add_widget(scroll)
+       self.scroll = ScrollView(size_hint=(1, 1))
+       self.content = BoxLayout(orientation="vertical", padding=20, spacing=14, size_hint_y=None)
+       self.content.bind(minimum_height=self.content.setter("height"))
+        self.scroll.add_widget(self.content)
+          root.add_widget(self.scroll)
 
         self.content.add_widget(make_label("Στοιχεία Χρήστη", 30, height=65, bold=True))
 
+
         self.first_name = TextInput(hint_text="Όνομα", multiline=False, font_size=fs(23), size_hint_y=None, height=65)
         self.content.add_widget(self.first_name)
+         self.first_name.bind(focus=lambda instance, value:self.scroll_to_input(instance, value))
 
         self.last_name = TextInput(hint_text="Επίθετο", multiline=False, font_size=fs(23), size_hint_y=None, height=65)
         self.content.add_widget(self.last_name)
+         self.last_name.bind(focus=lambda instance, value:self.scroll_to_input(instance, value))
 
         self.gender = Spinner(
             text="Φύλο",
@@ -350,7 +354,7 @@ class ProfileScreen(Screen):
         self.content.add_widget(self.date_input)
 
         row = BoxLayout(orientation="horizontal", spacing=8, size_hint_y=None, height=65)
-
+        self.date_input.bind(focus=lambda instance, value: self.scroll_to_input(instance, value)) 
         self.day_spinner = Spinner(text="Ημέρα", values=[str(i) for i in range(1, 32)], font_size=fs(18))
         self.month_spinner = Spinner(text="Μήνας", values=[str(i) for i in range(1, 13)], font_size=fs(18))
         self.year_spinner = Spinner(text="Χρονιά", values=[str(i) for i in range(date.today().year, 1900, -1)], font_size=fs(18))
@@ -387,6 +391,10 @@ class ProfileScreen(Screen):
         zoom_row.add_widget(bigger)
 
         self.content.add_widget(zoom_row)
+
+     def scroll_to_input(self, widget, focused):
+        if focused:
+          Clock.schedule_once(lambda dt: self.scroll.scroll_to(widget, padding=180), 0.4)
 
     def on_enter(self):
         if store.exists("user"):
