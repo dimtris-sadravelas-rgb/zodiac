@@ -6,8 +6,8 @@ package.domain = gr.sadravelas
 version = 0.2
 
 source.dir = .
-source.include_exts = py,png,jpg
-
+source.include_exts = py,png,jpg,json
+android.permissions = INTERNET
 requirements = python3,kivy
 
 orientation = portrait
