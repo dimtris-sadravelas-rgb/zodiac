@@ -6,6 +6,7 @@ Config.set("graphics", "resizable", True)
 
 from kivy.app import App
 from kivy.core.window import Window
+from kivy.clock import Clock
 from kivy.storage.jsonstore import JsonStore
 from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.uix.boxlayout import BoxLayout
@@ -17,7 +18,6 @@ from kivy.uix.spinner import Spinner
 from kivy.uix.checkbox import CheckBox
 from kivy.uix.image import Image
 from datetime import date
-from kivy.clock import Clock
 import webbrowser
 
 
@@ -53,7 +53,10 @@ def make_label(text, size=18, height=None, bold=False):
     )
 
     if height is None:
-        label.bind(texture_size=lambda instance, value: setattr(instance, "height", value[1] + 25))
+        label.bind(
+            texture_size=lambda instance, value:
+            setattr(instance, "height", value[1] + 25)
+        )
     else:
         label.height = height
 
@@ -293,7 +296,13 @@ class ConsentScreen(Screen):
         row.add_widget(Label(text="Αποδέχομαι τους όρους", font_size=fs(20)))
         main.add_widget(row)
 
-        self.error = Label(text="", color=(1, 0.2, 0.2, 1), font_size=fs(18), size_hint_y=None, height=40)
+        self.error = Label(
+            text="",
+            color=(1, 0.2, 0.2, 1),
+            font_size=fs(18),
+            size_hint_y=None,
+            height=40
+        )
         main.add_widget(self.error)
 
         button = Button(text="Συνέχεια", font_size=fs(24), size_hint_y=None, height=65)
@@ -316,22 +325,44 @@ class ProfileScreen(Screen):
         root = BoxLayout(orientation="vertical")
         self.add_widget(root)
 
-       self.scroll = ScrollView(size_hint=(1, 1))
-       self.content = BoxLayout(orientation="vertical", padding=20, spacing=14, size_hint_y=None)
-       self.content.bind(minimum_height=self.content.setter("height"))
+        self.scroll = ScrollView(size_hint=(1, 1))
+        self.content = BoxLayout(
+            orientation="vertical",
+            padding=20,
+            spacing=14,
+            size_hint_y=None
+        )
+        self.content.bind(minimum_height=self.content.setter("height"))
         self.scroll.add_widget(self.content)
-          root.add_widget(self.scroll)
+        root.add_widget(self.scroll)
 
         self.content.add_widget(make_label("Στοιχεία Χρήστη", 30, height=65, bold=True))
 
-
-        self.first_name = TextInput(hint_text="Όνομα", multiline=False, font_size=fs(23), size_hint_y=None, height=65)
+        self.first_name = TextInput(
+            hint_text="Όνομα",
+            multiline=False,
+            font_size=fs(23),
+            size_hint_y=None,
+            height=65
+        )
         self.content.add_widget(self.first_name)
-         self.first_name.bind(focus=lambda instance, value:self.scroll_to_input(instance, value))
+        self.first_name.bind(
+            focus=lambda instance, value:
+            self.scroll_to_input(instance, value)
+        )
 
-        self.last_name = TextInput(hint_text="Επίθετο", multiline=False, font_size=fs(23), size_hint_y=None, height=65)
+        self.last_name = TextInput(
+            hint_text="Επίθετο",
+            multiline=False,
+            font_size=fs(23),
+            size_hint_y=None,
+            height=65
+        )
         self.content.add_widget(self.last_name)
-         self.last_name.bind(focus=lambda instance, value:self.scroll_to_input(instance, value))
+        self.last_name.bind(
+            focus=lambda instance, value:
+            self.scroll_to_input(instance, value)
+        )
 
         self.gender = Spinner(
             text="Φύλο",
@@ -352,30 +383,69 @@ class ProfileScreen(Screen):
             height=65
         )
         self.content.add_widget(self.date_input)
+        self.date_input.bind(
+            focus=lambda instance, value:
+            self.scroll_to_input(instance, value)
+        )
 
         row = BoxLayout(orientation="horizontal", spacing=8, size_hint_y=None, height=65)
-        self.date_input.bind(focus=lambda instance, value: self.scroll_to_input(instance, value)) 
-        self.day_spinner = Spinner(text="Ημέρα", values=[str(i) for i in range(1, 32)], font_size=fs(18))
-        self.month_spinner = Spinner(text="Μήνας", values=[str(i) for i in range(1, 13)], font_size=fs(18))
-        self.year_spinner = Spinner(text="Χρονιά", values=[str(i) for i in range(date.today().year, 1900, -1)], font_size=fs(18))
+
+        self.day_spinner = Spinner(
+            text="Ημέρα",
+            values=[str(i) for i in range(1, 32)],
+            font_size=fs(18)
+        )
+
+        self.month_spinner = Spinner(
+            text="Μήνας",
+            values=[str(i) for i in range(1, 13)],
+            font_size=fs(18)
+        )
+
+        self.year_spinner = Spinner(
+            text="Χρονιά",
+            values=[str(i) for i in range(date.today().year, 1900, -1)],
+            font_size=fs(18)
+        )
 
         row.add_widget(self.day_spinner)
         row.add_widget(self.month_spinner)
         row.add_widget(self.year_spinner)
         self.content.add_widget(row)
 
-        self.error = Label(text="", color=(1, 0.2, 0.2, 1), font_size=fs(18), size_hint_y=None, height=55)
+        self.error = Label(
+            text="",
+            color=(1, 0.2, 0.2, 1),
+            font_size=fs(18),
+            size_hint_y=None,
+            height=55
+        )
         self.content.add_widget(self.error)
 
-        submit = Button(text="Βρες το Ζώδιό μου", font_size=fs(24), size_hint_y=None, height=70)
+        submit = Button(
+            text="Βρες το Ζώδιό μου",
+            font_size=fs(24),
+            size_hint_y=None,
+            height=70
+        )
         submit.bind(on_press=self.submit)
         self.content.add_widget(submit)
 
-        clear = Button(text="Καθαρισμός στοιχείων", font_size=fs(21), size_hint_y=None, height=60)
+        clear = Button(
+            text="Καθαρισμός στοιχείων",
+            font_size=fs(21),
+            size_hint_y=None,
+            height=60
+        )
         clear.bind(on_press=self.clear_user)
         self.content.add_widget(clear)
 
-        terms = Button(text="Προβολή όρων", font_size=fs(21), size_hint_y=None, height=60)
+        terms = Button(
+            text="Προβολή όρων",
+            font_size=fs(21),
+            size_hint_y=None,
+            height=60
+        )
         terms.bind(on_press=self.show_terms)
         self.content.add_widget(terms)
 
@@ -392,9 +462,12 @@ class ProfileScreen(Screen):
 
         self.content.add_widget(zoom_row)
 
-     def scroll_to_input(self, widget, focused):
+    def scroll_to_input(self, widget, focused):
         if focused:
-          Clock.schedule_once(lambda dt: self.scroll.scroll_to(widget, padding=180), 0.4)
+            Clock.schedule_once(
+                lambda dt: self.scroll.scroll_to(widget, padding=220),
+                0.5
+            )
 
     def on_enter(self):
         if store.exists("user"):
@@ -482,12 +555,20 @@ class ProfileScreen(Screen):
                 self.error.text = "Λάθος μορφή. Γράψε π.χ. 25/03/2000"
                 return None
 
-        if self.day_spinner.text == "Ημέρα" or self.month_spinner.text == "Μήνας" or self.year_spinner.text == "Χρονιά":
+        if (
+            self.day_spinner.text == "Ημέρα"
+            or self.month_spinner.text == "Μήνας"
+            or self.year_spinner.text == "Χρονιά"
+        ):
             self.error.text = "Συμπλήρωσε ημέρα, μήνα και χρονιά."
             return None
 
         try:
-            return date(int(self.year_spinner.text), int(self.month_spinner.text), int(self.day_spinner.text))
+            return date(
+                int(self.year_spinner.text),
+                int(self.month_spinner.text),
+                int(self.day_spinner.text)
+            )
         except ValueError:
             self.error.text = "Η ημερομηνία που διάλεξες δεν υπάρχει."
             return None
@@ -514,14 +595,22 @@ class ResultScreen(Screen):
         content.add_widget(make_label(f"{user['first_name']} {user['last_name']}", 27, height=55, bold=True))
         content.add_widget(make_label(f"Ηλικία: {user['age']} | Ζώδιο: {zodiac_name}", 23, height=55, bold=True))
 
-        content.add_widget(Image(source=data["image"], size_hint_y=None, height=260, allow_stretch=True, keep_ratio=True))
+        content.add_widget(Image(
+            source=data["image"],
+            size_hint_y=None,
+            height=260,
+            allow_stretch=True,
+            keep_ratio=True
+        ))
 
         content.add_widget(make_label("Προφίλ ζωδίου", 25, height=50, bold=True))
         content.add_widget(make_label(data["text"], 21))
 
         content.add_widget(make_label("Βασικά στοιχεία", 25, height=50, bold=True))
         content.add_widget(make_label(
-            f"Στοιχείο: {data['element']}\nΤυχερό χρώμα: {data['color']}\nΤυχερός αριθμός: {data['number']}",
+            f"Στοιχείο: {data['element']}\n"
+            f"Τυχερό χρώμα: {data['color']}\n"
+            f"Τυχερός αριθμός: {data['number']}",
             21
         ))
 
@@ -537,14 +626,26 @@ class ResultScreen(Screen):
         content.add_widget(make_label("Πιο συμβατά ζώδια", 25, height=50, bold=True))
 
         for sign in data["compatible"]:
-            btn = Button(text=sign, font_size=fs(22), size_hint_y=None, height=65, background_color=(0.2, 0.55, 0.25, 1))
+            btn = Button(
+                text=sign,
+                font_size=fs(22),
+                size_hint_y=None,
+                height=65,
+                background_color=(0.2, 0.55, 0.25, 1)
+            )
             btn.bind(on_press=lambda instance, s=sign: self.open_compatibility(zodiac_name, s, True))
             content.add_widget(btn)
 
         content.add_widget(make_label("Λιγότερο συμβατά ζώδια", 25, height=50, bold=True))
 
         for sign in data["difficult"]:
-            btn = Button(text=sign, font_size=fs(22), size_hint_y=None, height=65, background_color=(0.65, 0.25, 0.25, 1))
+            btn = Button(
+                text=sign,
+                font_size=fs(22),
+                size_hint_y=None,
+                height=65,
+                background_color=(0.65, 0.25, 0.25, 1)
+            )
             btn.bind(on_press=lambda instance, s=sign: self.open_compatibility(zodiac_name, s, False))
             content.add_widget(btn)
 
