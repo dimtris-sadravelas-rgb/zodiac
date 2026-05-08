@@ -19,9 +19,15 @@ from kivy.uix.image import Image
 from datetime import date
 import webbrowser
 
+Window.softinput_mode = "resize"
 
+FONT_EXTRA = 0
 store = JsonStore("user_data.json")
 
+
+def fs(size):
+    scale = Window.width / 390
+    return max(size, int(size * scale))
 
 ZODIACS = {
     "Κριός": {
@@ -224,7 +230,7 @@ def find_zodiac(month, day):
 def make_label(text, size=18, height=None, bold=False):
     label = Label(
         text=text,
-        font_size=size,
+        font_size=fs(size),
         bold=bold,
         halign="center",
         valign="top",
@@ -249,7 +255,7 @@ class ConsentScreen(Screen):
 
         title = Label(
             text="Αποδοχή Όρων",
-            font_size=28,
+            font_size=fs(28),
             bold=True,
             size_hint_y=None,
             height=60
@@ -285,7 +291,7 @@ class ConsentScreen(Screen):
 
         row.add_widget(Label(
             text="Αποδέχομαι τους όρους",
-            font_size=18,
+            font_size=fs(18),
             halign="left"
         ))
 
@@ -294,7 +300,7 @@ class ConsentScreen(Screen):
         self.error = Label(
             text="",
             color=(1, 0.2, 0.2, 1),
-            font_size=16,
+            font_size=fs(16),
             size_hint_y=None,
             height=35
         )
@@ -302,7 +308,7 @@ class ConsentScreen(Screen):
 
         button = Button(
             text="Συνέχεια",
-            font_size=22,
+            font_size=fs(22),
             size_hint_y=None,
             height=60
         )
@@ -327,7 +333,7 @@ class ProfileScreen(Screen):
 
         main.add_widget(Label(
             text="Στοιχεία Χρήστη",
-            font_size=28,
+            font_size=fs(28),
             bold=True,
             size_hint_y=None,
             height=60
@@ -336,7 +342,7 @@ class ProfileScreen(Screen):
         self.first_name = TextInput(
             hint_text="Όνομα",
             multiline=False,
-            font_size=20,
+            font_size=fs(20),
             size_hint_y=None,
             height=55
         )
@@ -345,7 +351,7 @@ class ProfileScreen(Screen):
         self.last_name = TextInput(
             hint_text="Επίθετο",
             multiline=False,
-            font_size=20,
+            font_size=fs(20),
             size_hint_y=None,
             height=55
         )
@@ -354,7 +360,7 @@ class ProfileScreen(Screen):
         self.gender = Spinner(
             text="Φύλο",
             values=["Άνδρας", "Γυναίκα", "Άλλο / Δεν απαντώ"],
-            font_size=20,
+            font_size=fs(20),
             size_hint_y=None,
             height=55
         )
@@ -362,7 +368,7 @@ class ProfileScreen(Screen):
 
         main.add_widget(Label(
             text="Γράψε ημερομηνία γέννησης ή διάλεξέ την από κάτω.",
-            font_size=17,
+            font_size=fs(17),
             size_hint_y=None,
             height=50
         ))
@@ -370,7 +376,7 @@ class ProfileScreen(Screen):
         self.date_input = TextInput(
             hint_text="π.χ. 25/03/2000",
             multiline=False,
-            font_size=20,
+            font_size=fs(20),
             size_hint_y=None,
             height=55
         )
@@ -381,13 +387,13 @@ class ProfileScreen(Screen):
         self.day_spinner = Spinner(
             text="Ημέρα",
             values=[str(i) for i in range(1, 32)],
-            font_size=17
+            font_size=fs(17)
         )
 
         self.month_spinner = Spinner(
             text="Μήνας",
             values=[str(i) for i in range(1, 13)],
-            font_size=17
+            font_size=fs(17)
         )
 
         current_year = date.today().year
@@ -395,7 +401,7 @@ class ProfileScreen(Screen):
         self.year_spinner = Spinner(
             text="Χρονιά",
             values=[str(i) for i in range(current_year, 1900, -1)],
-            font_size=17
+            font_size=fs(17)
         )
 
         row.add_widget(self.day_spinner)
@@ -407,7 +413,7 @@ class ProfileScreen(Screen):
         self.error = Label(
             text="",
             color=(1, 0.2, 0.2, 1),
-            font_size=16,
+            font_size=fs(16),
             size_hint_y=None,
             height=50
         )
@@ -415,7 +421,7 @@ class ProfileScreen(Screen):
 
         button = Button(
             text="Βρες το Ζώδιό μου",
-            font_size=22,
+            font_size=fs(22),
             size_hint_y=None,
             height=60
         )
@@ -583,7 +589,7 @@ class ResultScreen(Screen):
         for sign in data["compatible"]:
             btn = Button(
                 text=sign,
-                font_size=19,
+                font_size=fs(19),
                 size_hint_y=None,
                 height=55,
                 background_color=(0.2, 0.55, 0.25, 1)
@@ -596,7 +602,7 @@ class ResultScreen(Screen):
         for sign in data["difficult"]:
             btn = Button(
                 text=sign,
-                font_size=19,
+                font_size=fs(19),
                 size_hint_y=None,
                 height=55,
                 background_color=(0.65, 0.25, 0.25, 1)
@@ -606,7 +612,7 @@ class ResultScreen(Screen):
 
         link_btn = Button(
             text="Περισσότερη ανάλυση online",
-            font_size=19,
+            font_size=fs(19),
             size_hint_y=None,
             height=60
         )
@@ -615,7 +621,7 @@ class ResultScreen(Screen):
 
         edit_btn = Button(
             text="Αλλαγή στοιχείων",
-            font_size=19,
+            font_size=fs(19),
             size_hint_y=None,
             height=60
         )
@@ -647,7 +653,7 @@ class CompatibilityScreen(Screen):
 
         self.layout.add_widget(Label(
             text=title_text,
-            font_size=26,
+            font_size=fs(26),
             bold=True,
             size_hint_y=None,
             height=60
@@ -683,7 +689,7 @@ class CompatibilityScreen(Screen):
 
         back = Button(
             text="Πίσω",
-            font_size=22,
+            font_size=fs(22),
             size_hint_y=None,
             height=60
         )
