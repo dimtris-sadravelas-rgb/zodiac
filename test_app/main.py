@@ -9,7 +9,7 @@ from kivy.core.window import Window
 from kivy.uix.label import Label
 from kivy.uix.scrollview import ScrollView
 
-Window.softinput_mode = "resize"
+Window.softinput_mode = "below_target"
 
 
 class ZodiacApp(App):
