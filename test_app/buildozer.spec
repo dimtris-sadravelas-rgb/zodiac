@@ -3,7 +3,7 @@
 title = Birth Zodiac Finder
 package.name = birthzodiacfinder
 package.domain = gr.sadravelas
-version = 0.3
+version = 0.7
 
 source.dir = .
 source.include_exts = py,png,jpg,json
