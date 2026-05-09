@@ -34,12 +34,14 @@ class ProfileScreen(Screen):
         self.content.add_widget(make_label("Στοιχεία Χρήστη", 30, height=65, bold=True))
 
         self.first_name = TextInput(
-            hint_text="Όνομα",
-            multiline=False,
-            font_size=fs(23),
-            size_hint_y=None,
-            height=65
-        )
+    hint_text="Όνομα",
+    multiline=False,
+    font_size=fs(23),
+    size_hint_y=None,
+    height=65,
+    write_tab=False,
+    keyboard_suggestions=False
+)
         self.content.add_widget(self.first_name)
         self.first_name.bind(
             focus=lambda instance, value:
@@ -47,12 +49,14 @@ class ProfileScreen(Screen):
         )
 
         self.last_name = TextInput(
-            hint_text="Επίθετο",
-            multiline=False,
-            font_size=fs(23),
-            size_hint_y=None,
-            height=65
-        )
+    hint_text="Επίθετο",
+    multiline=False,
+    font_size=fs(23),
+    size_hint_y=None,
+    height=65,
+    write_tab=False,
+    keyboard_suggestions=False
+)
         self.content.add_widget(self.last_name)
         self.last_name.bind(
             focus=lambda instance, value:
@@ -71,12 +75,15 @@ class ProfileScreen(Screen):
         self.content.add_widget(make_label("Ημερομηνία γέννησης", 22, height=45, bold=True))
 
         self.date_input = TextInput(
-            hint_text="π.χ. 25/03/2000",
-            multiline=False,
-            font_size=fs(23),
-            size_hint_y=None,
-            height=65
-        )
+    hint_text="π.χ. 25/03/2000",
+    multiline=False,
+    font_size=fs(23),
+    size_hint_y=None,
+    height=65,
+    write_tab=False,
+    keyboard_suggestions=False,
+    input_type="number"
+)
         self.content.add_widget(self.date_input)
         self.date_input.bind(
             focus=lambda instance, value:
