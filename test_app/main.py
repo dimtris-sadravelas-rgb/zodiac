@@ -290,11 +290,19 @@ class ConsentScreen(Screen):
         content.add_widget(make_label(text, 20))
         main.add_widget(scroll)
 
-        row = BoxLayout(size_hint_y=None, height=60, spacing=10)
-        self.checkbox = CheckBox(size_hint_x=None, width=55)
-        row.add_widget(self.checkbox)
-        row.add_widget(Label(text="Αποδέχομαι τους όρους", font_size=fs(20)))
-        main.add_widget(row)
+       self.accepted = False
+
+ self.accept_button = Button(
+    text="Δεν αποδέχτηκα τους όρους",
+    font_size=fs(20),
+    size_hint_y=None,
+    height=65,
+    background_color=(0.7, 0.2, 0.2, 1)
+)
+
+self.accept_button.bind(on_press=self.toggle_accept)
+
+main.add_widget(self.accept_button)
 
         self.error = Label(
             text="",
